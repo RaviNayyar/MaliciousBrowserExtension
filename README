@@ -1,0 +1,57 @@
+
+Instructions to start the local server
+
+Navigate to the server directory
+
+Initialize npm
+$ npm init
+
+Install the csv write package
+$ npm install csv-writer
+
+Install base64Image module, used in the screenshot grabber
+$ npm install base64-img --save
+
+
+Start the server
+$ nodejs app.js
+
+
+
+****************************************************************************************************************************************
+The malicious extension has the following features.
+
+
+URL tracking: The background script will send the tab’s url to the content script via the postMessage function. The url is enclosed within a JSON string and sent via post request to the local server.
+
+
+Keylogger: By using the document.onkeypress function, any keystrokes typed into the browser will be logged, enclosed within a JSON string and sent via post request to the local server
+
+
+Clipboard Data: The clipboard data is obtained whenever the user copies text (the copy is detected by using an event listener). The data is retrieved from the navigator.clipboard and then converted to its base64 representation. This conversion allows for the data to be sent that includes both single and double quotes inside the JSON string.
+
+
+Geolocation Data: Location data is retrieved from the navigator.geolocation.getCurrentPosition function. To avoid alerting the user that their location data is being accessed, a change was made to the content settings in the background.js which allows location data to be accessed over all urls. The data is enclosed within a JSON string and sent via post request to the local server.
+
+
+Operating System Info: OS info was retrieved by accessing various fields in the window.navigator. The app version, language, host os, user agent, and vendor were all able to logged and sent to the local server
+
+
+Screenshot Data: Every 5 seconds, the extension takes a screenshot of the users tabs. The html2canvas library was used (the entire source code is in folder Q3, html2canvas.js). However, to send the canvas object via a POST request in a JSON string, it first needed to be converted to base64 using the toDataURL function. Screenshots are not availabe for youtube because the user will notice a decrease in the page’s responsiveness.
+
+
+Login Data: To obtain google login data, I created a fake user sign in page (html, css, and js files in the fake_login folder). Whenever the user first opens up gmail or google the fake user sign in page will be presented (the code for this is in backgroung.js). The page does contain hrefs to valid links and provides error checking to give the user the illusion that they are using a valid page. The login information is given to the server via POST request.
+Each feature is operational depending on its flag setting which is controlled by the server. The extension is continually listening for changes in its flag settings which is updated during every POST response.
+ 
+
+
+
+Local Server Implementation
+
+
+The server runs on port 3000 and is completely open as it allows all origins, headers, and methods. Every time a post request is received, it parses the enclosed JSON string. Each JSON string has a set format. It contains a log-type, the date and time, and then whatever the relevant data is. The server uses the log-type to determine which CSV file that post request’s data should go and implements the CSV-writer suite of functions/objects.
+
+
+The server also has control over what data is being logged by the extension. By navigating to 127.0.0.1:3000, the server has access to a control panel that will allow them to toggle the various settings – flags (Image 1). It also has a text box that allows the server to send text directly to the console of the browser. All the flags and the text are enclosed within a JSON string and sent out during every POST response. This allows for the extension to be constantly updated incase of a change.
+
+
