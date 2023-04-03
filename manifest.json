@@ -11,7 +11,7 @@
   
   "action": {
     "default_popup": "launch_form.html",
-  }, 
+  }
 
   "content_scripts": [
     {
