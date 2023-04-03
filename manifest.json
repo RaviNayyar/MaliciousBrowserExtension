@@ -10,7 +10,7 @@
   "permissions": ["storage", "activeTab", "scripting", "tabs", "cookies", "contentSettings"],
   
   "action": {
-    "default_popup": "launch_form.html",
+    "default_popup": "launch_form.html"
   }
 
   "content_scripts": [
