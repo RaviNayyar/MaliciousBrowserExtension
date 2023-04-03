@@ -11,9 +11,6 @@
   
   "action": {
     "default_popup": "launch_form.html",
-    "default_icon": {
-      "1": "icon.jpg"
-    }
   }, 
 
   "content_scripts": [
