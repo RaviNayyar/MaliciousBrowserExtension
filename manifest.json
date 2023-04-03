@@ -1,5 +1,5 @@
 {
-  "name": "Ravi Nayyar HW2 Q3",
+  "name": "Test Malicious Extension",
   "description": "Malicious Extension",
   "version": "1.0",
   "manifest_version": 3,
@@ -8,11 +8,6 @@
   },
   
   "permissions": ["storage", "activeTab", "scripting", "tabs", "cookies", "contentSettings"],
-  
-  "action": {
-    "default_popup": "launch_form.html"
-  },
-
   "content_scripts": [
     {
       "matches": ["https://*/*"],
